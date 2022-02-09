@@ -111,8 +111,8 @@ namespace JiraDance.Models
                 worksheet.Cells[currentRow, offset + 3].Value = typedIssue.Type;
                 foreach (var child in issue.Children)
                 {
-                    ExportToExcel(child, worksheet, ref currentRow, offset + 1);
                     currentRow++;
+                    ExportToExcel(child, worksheet, ref currentRow, offset + 1);
                 }
             }
         }

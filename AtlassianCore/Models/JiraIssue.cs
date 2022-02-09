@@ -72,7 +72,7 @@ namespace JiraDance.Models
         /// <summary>
         /// Gets or sets the issue type.
         /// </summary>
-        [JsonProperty("issueType.name")]
+        [JsonProperty("fields.issuetype.name")]
         public string Type
         {
             get;

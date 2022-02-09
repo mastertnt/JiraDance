@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JiraDance\JiraDance.csproj" />
+    <ProjectReference Include="..\AtlassianCore\AtlassianCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

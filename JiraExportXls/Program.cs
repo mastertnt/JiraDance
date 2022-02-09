@@ -20,7 +20,9 @@ namespace JiraDance
                 TechSettings settings = TechSettings.Build(@".\techsettings.json");
                 JiraIssueDatabase database = new JiraIssueDatabase();
                 database.Initialize(settings.EndPoint, settings.Username, settings.Password, settings.ResponseDebugPath, settings.ProjectKeys); ;
-                database.ExportToExcel(@".\test.xls");
+                database.ExportToExcel(@".\test.xlsx");
+                //Process.Start("test.xlsx");
+
             }
             catch (Exception e)
             {
