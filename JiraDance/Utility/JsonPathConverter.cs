@@ -20,25 +20,27 @@ namespace JiraDance
             foreach (PropertyInfo prop in objectType.GetProperties().Where(p => p.CanRead && p.CanWrite))
             {
                 JsonPropertyAttribute att = prop.GetCustomAttributes(true).OfType<JsonPropertyAttribute>().FirstOrDefault()!;
-
-                string jsonPath = att.PropertyName;
-
-                if (serializer.ContractResolver is DefaultContractResolver)
+                if (att != null)
                 {
-                    var resolver = (DefaultContractResolver)serializer.ContractResolver;
-                    jsonPath = resolver.GetResolvedPropertyName(jsonPath);
-                }
+                    string jsonPath = att.PropertyName;
 
-                if (!Regex.IsMatch(jsonPath, @"^[a-zA-Z0-9_.-]+$"))
-                {
-                    throw new InvalidOperationException($"JProperties of JsonPathConverter can have only letters, numbers, underscores, hiffens and dots but name was ${jsonPath}."); // Array operations not permitted
-                }
+                    if (serializer.ContractResolver is DefaultContractResolver)
+                    {
+                        var resolver = (DefaultContractResolver)serializer.ContractResolver;
+                        jsonPath = resolver.GetResolvedPropertyName(jsonPath);
+                    }
 
-                JToken token = jo.SelectToken(jsonPath);
-                if (token != null && token.Type != JTokenType.Null)
-                {
-                    object value = token.ToObject(prop.PropertyType, serializer);
-                    prop.SetValue(targetObj, value, null);
+                    if (!Regex.IsMatch(jsonPath, @"^[a-zA-Z0-9_.-]+$"))
+                    {
+                        throw new InvalidOperationException($"JProperties of JsonPathConverter can have only letters, numbers, underscores, hiffens and dots but name was ${jsonPath}."); // Array operations not permitted
+                    }
+
+                    JToken token = jo.SelectToken(jsonPath);
+                    if (token != null && token.Type != JTokenType.Null)
+                    {
+                        object value = token.ToObject(prop.PropertyType, serializer);
+                        prop.SetValue(targetObj, value, null);
+                    }
                 }
             }
             return targetObj;

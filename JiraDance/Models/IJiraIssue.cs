@@ -8,7 +8,7 @@
         /// <summary>
         /// Unique internal identifier.
         /// </summary>
-        public string Id
+        string Id
         {
             get;
             set;
@@ -17,7 +17,33 @@
         /// <summary>
         /// User friendly identifier.
         /// </summary>
-        public string Key
+        string Key
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// List of children.
+        /// </summary>
+        List<IJiraIssue> Children
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Parent node.
+        /// </summary>
+
+        IJiraIssue Parent
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets all issues among the same connection.
+        /// </summary>
+        JiraIssueDatabase Database
         {
             get;
             set;

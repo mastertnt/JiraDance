@@ -16,8 +16,8 @@ namespace JiraDance
         [Get("agile/1.0/issue/{issueId}")]
         Task<JiraIssue> GetIssue([Path] string issueId);
 
-        [Get("/api/3/search?jql=project={projectName}")]
-        Task<JiraSearchResult> GetAllIssuesByProject([Path] string projectName);
+        [Get("/api/3/search?jql=project={projectName}&startAt={shift}")]
+        Task<JiraSearchResult> GetAllIssuesByProject([Path] string projectName, [Path] int shift);
     }
 
 }

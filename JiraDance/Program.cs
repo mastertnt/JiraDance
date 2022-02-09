@@ -1,5 +1,7 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Text;
+using JiraDance.FieldManagement;
 using RestEase;
 namespace JiraDance
 {
@@ -13,18 +15,10 @@ namespace JiraDance
         {
             try
             {
-                string endpoint = "https://nby.atlassian.net/rest";
-                string user = "nby.dev@gmail.com";
-                string password = "7F8xeNP5Qfp0415fvxRp7DF0";
+                Processor processor = new Processor();
+                processor.Initialize();
+                processor.Run();
 
-                // Create an implementation of that interface
-                // We'll pass in the base URL for the API
-                IJiraIssueApi api = RestClient.For<IJiraIssueApi>(endpoint, new DebugResponseDeserializer());
-
-                var value = Convert.ToBase64String(Encoding.ASCII.GetBytes(user + ":" + password));
-                api.Authorization = new AuthenticationHeaderValue("Basic", value);
-                
-                Console.WriteLine(api.GetAllIssuesByProject("nby").Result);
             }
             catch (Exception e)
             {

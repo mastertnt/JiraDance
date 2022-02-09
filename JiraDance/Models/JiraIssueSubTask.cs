@@ -9,10 +9,17 @@ namespace JiraDance.Models
 {
     [ToString]
     [JsonConverter(typeof(JsonPathConverter))]
-    public class JiraIssueSub
+    public class JiraIssueSubTask
     {
         [JsonProperty("id")]
         public string Id
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty("key")]
+        public string Key
         {
             get;
             set;

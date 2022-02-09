@@ -1,10 +1,22 @@
-﻿namespace JiraDance
+﻿using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+using JiraDance.FieldManagement;
+using JiraDance.FieldManagement.Conditions;
+using JiraDance.FieldManagement.Updaters;
+using Newtonsoft.Json;
+
+namespace JiraDance
 {
     /// <summary>
     /// Stores the technical settings.
     /// </summary>
-    internal class TechSettings
+    public class TechSettings
     {
+        /// <summary>
+        /// Current NLog.
+        /// </summary>
+        private static readonly NLog.Logger msLogger = NLog.LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -65,6 +77,54 @@
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Build the technical settings.
+        /// </summary>
+        /// <param name="filename">filename of the technical settings.</param>
+        /// <returns>The technical settings.</returns>
+        public static TechSettings Build(string filename)
+        {
+            TechSettings lSettings = null;
+
+            // If the setting is null, create default one.
+            if (File.Exists(filename))
+            {
+                try
+                {
+                    string lJsonValue = File.ReadAllText(filename);
+                    lSettings = JsonConvert.DeserializeObject<TechSettings>(lJsonValue);
+                }
+                catch (Exception lEx)
+                {
+                    msLogger.Error("Cannot load " + filename + " / " + lEx);
+                    // ignored
+                }
+            }
+            else
+            {
+                msLogger.Error("Cannot find " + filename);
+            }
+
+            if (lSettings == null)
+            {
+                lSettings = new TechSettings()
+                {
+                    EndPoint = "https://tuleap.diginext.local/api/",
+                    Username = "USER_TO_CHANGE",
+                    Password = "PASSWORD_TO_CHANGE",
+                    LogOnlyAction = true,
+                    ProjectKeys = new List<string>() { "SDCNGF, TDCWP31" },
+                    ResponseDebugPath = ""
+                };
+
+                Formatting lIndented = Formatting.Indented;
+                var lSerialized = JsonConvert.SerializeObject(lSettings, lIndented);
+                File.WriteAllText(filename, lSerialized);
+            }
+
+            return lSettings;
         }
     }
 }
