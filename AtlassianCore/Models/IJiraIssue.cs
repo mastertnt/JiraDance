@@ -1,4 +1,4 @@
-﻿namespace JiraDance.Models
+﻿namespace AtlassianCore.Models
 {
     /// <summary>
     /// Interface for all the issues.

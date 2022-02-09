@@ -1,9 +1,9 @@
-﻿using JiraDance.FieldManagement.Conditions;
-using JiraDance.FieldManagement.Updaters;
+﻿using AtlassianCore.FieldManagement.Conditions;
+using AtlassianCore.FieldManagement.Updaters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace JiraDance.FieldManagement
+namespace AtlassianCore.FieldManagement
 {
     /// <summary>
     /// A class to convert from ITemplate.
@@ -73,7 +73,11 @@ namespace JiraDance.FieldManagement
             {
                 lResult = new NoChild();
             }
-            
+            else if (lJsonObject["Type"].Value<string>() == "NoChange")
+            {
+                lResult = new NoChange();
+            }
+
             pSerializer.Populate(lJsonObject.CreateReader(), lResult);
             return lResult;
         }

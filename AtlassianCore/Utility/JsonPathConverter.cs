@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
-namespace JiraDance
+namespace AtlassianCore.Utility
 {
     /// <summary>
     /// This class is used to retrieve nested properties.

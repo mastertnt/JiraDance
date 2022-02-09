@@ -1,8 +1,5 @@
-﻿using System.Diagnostics;
-using System.Net.Http.Headers;
-using System.Text;
-using JiraDance.FieldManagement;
-using RestEase;
+﻿using AtlassianCore.FieldManagement;
+
 namespace JiraDance
 {
     internal class Program
@@ -24,7 +21,7 @@ namespace JiraDance
             {
                 Console.WriteLine(e);
             }
-            
+
         }
     }
 }

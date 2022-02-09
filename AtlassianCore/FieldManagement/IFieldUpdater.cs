@@ -1,6 +1,6 @@
-﻿using JiraDance.Models;
+﻿using AtlassianCore.Models;
 
-namespace JiraDance.FieldManagement
+namespace AtlassianCore.FieldManagement
 {
     /// <summary>
     /// This interface updates a field to a value or a computation of different values.

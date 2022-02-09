@@ -1,6 +1,6 @@
 ﻿using RestEase;
 
-namespace JiraDance
+namespace AtlassianCore.Utility
 {
     /// <summary>
     /// This class is used to debug the response from rest api.

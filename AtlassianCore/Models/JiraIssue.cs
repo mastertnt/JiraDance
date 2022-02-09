@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AtlassianCore.Utility;
 using Newtonsoft.Json;
-using OfficeOpenXml.Table.PivotTable;
 
-namespace JiraDance.Models
+namespace AtlassianCore.Models
 {
     [ToString]
     [JsonConverter(typeof(JsonPathConverter))]
     public class JiraIssue : IJiraIssue
     {
-        private string mParentKey = null;
+        private bool mSearchParent = false;
+
+        private IJiraIssue mParent = null;
 
 
         /// <inheritdoc/>
@@ -40,22 +37,38 @@ namespace JiraDance.Models
             }
         }
 
+        public string ParentId
+        {
+            get
+            {
+                if (this.Parent != null)
+                {
+                    return this.Parent.Id;
+                }
+
+                return "NoParent";
+            }
+        }
+
         /// <inheritdoc/>
         public IJiraIssue Parent
         {
             get
             {
-                if (this.mParentKey == null)
+                if (this.mSearchParent == false)
                 {
-                    this.mParentKey = this.Issuelinks.FirstOrDefault(link => link.IsOutward && link.Type == "relates to")?.Key ?? string.Empty;
+                    this.mSearchParent = true;
+
+                    string parentKey = this.Issuelinks.FirstOrDefault(link => link.IsOutward && link.Type == "relates to")?.Key;
+                    if (string.IsNullOrWhiteSpace(parentKey))
+                    {
+                        parentKey = this.SubTaskParentKey;
+                    }
+
+                    this.mParent = this.Database.Issues.FirstOrDefault(parent => parent.Key == parentKey);
                 }
 
-                if (string.IsNullOrWhiteSpace(this.mParentKey))
-                {
-                    return null;
-                }
-                    
-                return this.Database.Issues.FirstOrDefault(parent => parent.Key == this.mParentKey);
+                return this.mParent;
             }
         }
 
@@ -126,5 +139,14 @@ namespace JiraDance.Models
             set;
         }
 
+        /// <summary>
+        /// When an issue is a sub-task, the parent id is written.
+        /// </summary>
+        [JsonProperty("fields.parent.key")]
+        public string SubTaskParentKey
+        {
+            get;
+            set;
+        }
     }
 }

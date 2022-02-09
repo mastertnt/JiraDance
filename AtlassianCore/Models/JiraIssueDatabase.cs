@@ -1,12 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Net.Http.Headers;
 using System.Text;
-using JiraDance.Utility;
+using AtlassianCore.Utility;
 using OfficeOpenXml;
 using RestEase;
 
-namespace JiraDance.Models
+namespace AtlassianCore.Models
 {
     /// <summary>
     /// This class is responsible to store all issues.
@@ -33,7 +32,7 @@ namespace JiraDance.Models
         public JiraIssueDatabase()
         {
             this.Issues = new ObservableRangeCollection<IJiraIssue>();
-            this.Issues.CollectionChanged += Issues_CollectionChanged;
+            this.Issues.CollectionChanged += this.Issues_CollectionChanged;
         }
 
         public int Initialize(string endPoint, string username, string password, string responseDebugPath, List<string> projectKeys)
@@ -92,7 +91,7 @@ namespace JiraDance.Models
                 IEnumerable<IJiraIssue> roots = this.Issues.Where(issue => issue.Parent == null);
                 foreach (var root in roots)
                 {
-                    ExportToExcel(root, worksheet, ref currentRow, 1);
+                    this.ExportToExcel(root, worksheet, ref currentRow, 1);
                     currentRow++;
                 }
                 package.Save();
@@ -109,10 +108,12 @@ namespace JiraDance.Models
                 worksheet.Cells[currentRow, offset + 1].Value = typedIssue.Summary;
                 worksheet.Cells[currentRow, offset + 2].Value = typedIssue.Status;
                 worksheet.Cells[currentRow, offset + 3].Value = typedIssue.Type;
+                worksheet.Cells[currentRow, offset + 4].Value = typedIssue.ParentId;
+                worksheet.Cells[currentRow, offset + 5].Value = typedIssue.Id;
                 foreach (var child in issue.Children)
                 {
                     currentRow++;
-                    ExportToExcel(child, worksheet, ref currentRow, offset + 1);
+                    this.ExportToExcel(child, worksheet, ref currentRow, offset + 1);
                 }
             }
         }

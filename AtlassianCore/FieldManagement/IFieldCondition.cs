@@ -1,4 +1,6 @@
-﻿namespace JiraDance.FieldManagement
+﻿using AtlassianCore.Models;
+
+namespace AtlassianCore.FieldManagement
 {
     /// <summary>
     /// This interface checks if a field must be updated according to source values.
@@ -16,8 +18,9 @@
         /// <summary>
         /// This method return true if the condition is raised according to the source values.
         /// </summary>
-        /// <param name="pSourceValues">The source values</param>
+        /// <param name="children">The list of issues.</param>
+        /// <param name="field">The field to check.</param>
         /// <returns>True if the condition is raised, false otherwise</returns>
-        bool IsRaised(List<object> pSourceValues);
+        bool IsRaised(List<IJiraIssue> children, string field);
     }
 }

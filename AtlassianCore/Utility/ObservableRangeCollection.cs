@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
-namespace JiraDance.Utility
+namespace AtlassianCore.Utility
 {
     /// <summary> 
     /// Represents a dynamic data collection that provides notifications when items get added, removed, or when the whole list is refreshed. 
@@ -26,7 +26,7 @@ namespace JiraDance.Utility
             }
 
             
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection as IList));
+            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection as IList));
         }
 
         /// <summary> 
@@ -44,7 +44,7 @@ namespace JiraDance.Utility
                 this.Items.Remove(i);
             }
 
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, collection as IList));
+            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, collection as IList));
         }
 
         /// <summary> 

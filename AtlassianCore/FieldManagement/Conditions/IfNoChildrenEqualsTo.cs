@@ -1,4 +1,7 @@
-﻿namespace JiraDance.FieldManagement.Conditions
+﻿using AtlassianCore.Models;
+using AtlassianCore.Utility;
+
+namespace AtlassianCore.FieldManagement.Conditions
 {
     /// <summary>
     /// A condition which check if no child is equal to a value.
@@ -14,9 +17,7 @@
             set;
         }
 
-        /// <summary>
-        /// Internal type.
-        /// </summary>
+        /// <inheritdoc/>
         public string Type
         {
             get
@@ -25,22 +26,12 @@
             }
         }
 
-        /// <summary>
-        /// This method return true if the condition is raised according to the source values. 
-        /// </summary>
-        /// <param name="pSourceValues">The list of values.</param>
-        /// <returns>True if the condition is raised.</returns>
-        public bool IsRaised(List<object> pSourceValues)
+        /// <inheritdoc/>
+        public bool IsRaised(List<IJiraIssue> children, string field)
         {
-            foreach (var lSourceValue in pSourceValues)
+            foreach (var child in children)
             {
-                string lSourceValueStr = "null";
-                if (lSourceValue != null)
-                {
-                    lSourceValueStr = lSourceValue.ToString();
-                }
-
-                if (lSourceValueStr == this.Value.ToString())
+                if (child.GetPropValue(field).ToString() == this.Value.ToString())
                 {
                     return false;
                 }
@@ -49,9 +40,7 @@
             return true;
         }
 
-        /// <summary>
-        /// Overrides ToString
-        /// </summary>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return "If no child equals to " + this.Value;

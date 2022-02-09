@@ -1,9 +1,8 @@
 ﻿using System.Net.Http.Headers;
-using JiraDance.Models;
-using Newtonsoft.Json;
+using AtlassianCore.Models;
 using RestEase;
 
-namespace JiraDance
+namespace AtlassianCore
 {
     /// <summary>
     /// JIRA API to retrieve issues.

@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using AtlassianCore.Utility;
+using Newtonsoft.Json;
 
-namespace JiraDance.Models
+namespace AtlassianCore.Models
 {
     [ToString]
     [JsonConverter(typeof(JsonPathConverter))]

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace JiraDance.FieldManagement
+namespace AtlassianCore.FieldManagement
 {
     public class FieldRule
     {

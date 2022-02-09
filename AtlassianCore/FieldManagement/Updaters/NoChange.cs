@@ -1,23 +1,19 @@
-﻿using AtlassianCore.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AtlassianCore.Models;
 using AtlassianCore.Utility;
 
 namespace AtlassianCore.FieldManagement.Updaters
 {
-    public class SetValue : IFieldUpdater
+    public class NoChange : IFieldUpdater
     {
         /// <summary>
         /// Current NLog.
         /// </summary>
         private static readonly NLog.Logger msLogger = NLog.LogManager.GetCurrentClassLogger();
-
-        /// <summary>
-        /// The value to set.
-        /// </summary>
-        public object Value
-        {
-            get;
-            set;
-        }
 
         /// <summary>
         /// Internal type.
@@ -39,18 +35,7 @@ namespace AtlassianCore.FieldManagement.Updaters
         /// <returns>True if a modification has been done, false otherwise.</returns>
         public string Update(IJiraIssue issue, string targetField, string targetValue)
         {
-            object lOldValue = issue.GetPropValue(targetField);
-            string lOldValueStr = "null";
-            if (lOldValue != null)
-            {
-                lOldValueStr = lOldValue.ToString();
-            }
-            
-            if (lOldValueStr != this.Value.ToString())
-            {
-                //pArtifact.CommitValue(pConnection, pTargetField.FieldName, this.Value);
-                msLogger.Debug("-------->Change the value of " + issue.Key + " from " + lOldValueStr + " to " + this.Value);
-            }
+            msLogger.Debug("-------->No change applied to " + issue.Key);
 
             return "";
         }
@@ -60,7 +45,7 @@ namespace AtlassianCore.FieldManagement.Updaters
         /// </summary>
         public override string ToString()
         {
-            return "set value to " + this.Value;
+            return "No change";
         }
     }
 }

@@ -1,13 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using System.Net.Http.Headers;
-using System.Text;
-using JiraDance.FieldManagement.Conditions;
-using JiraDance.FieldManagement.Updaters;
-using JiraDance.Models;
+using AtlassianCore.FieldManagement.Conditions;
+using AtlassianCore.FieldManagement.Updaters;
+using AtlassianCore.Models;
 using Newtonsoft.Json;
-using RestEase;
 
-namespace JiraDance.FieldManagement
+namespace AtlassianCore.FieldManagement
 {
     /// <summary>
     /// The rule processor.
@@ -44,41 +41,7 @@ namespace JiraDance.FieldManagement
 
         public string Initialize()
         {
-            // If the setting is null, create default one.
-            if (File.Exists(@".\techsettings.json"))
-            {
-                try
-                {
-                    string lJsonValue = File.ReadAllText(@".\techsettings.json");
-                    this.TechSettings = JsonConvert.DeserializeObject<TechSettings>(lJsonValue);
-                }
-                catch (Exception lEx)
-                {
-                    msLogger.Error("Cannot load techsettings.json" + lEx);
-                    // ignored
-                }
-            }
-            else
-            {
-                msLogger.Error("Cannot find settings.json");
-            }
-
-            if (this.TechSettings == null)
-            {
-                this.TechSettings = new TechSettings()
-                {
-                    EndPoint = "https://tuleap.diginext.local/api/",
-                    Username= "USER_TO_CHANGE",
-                    Password= "PASSWORD_TO_CHANGE",
-                    LogOnlyAction= true,
-                    ProjectKeys = new List<string>() { "SDCNGF, TDCWP31" },
-                    ResponseDebugPath = ""
-                };
-
-                Formatting lIndented = Formatting.Indented;
-                var lSerialized = JsonConvert.SerializeObject(this.TechSettings, lIndented);
-                File.WriteAllText(@".\techsettings.json", lSerialized);
-            }
+            this.TechSettings = TechSettings.Build(@".\techsettings.json");
 
             string lFilename = @".\rules.json";
 
@@ -109,43 +72,10 @@ namespace JiraDance.FieldManagement
 
                 {
                     FieldRules lRule = new FieldRules();
-                    lRule.Description = "ATMC DD update process according to tasks";
+                    lRule.Description = "Update status according to leaf node";
 
-                    lRule.TargetField = new Field { TrackerId = 344, FieldName = "Status" };
-                    Field lSourceField = new Field { TrackerId = 342, FieldName = "Status" };
-                    lRule.SourceFields.Add(lSourceField);
-
-                    IfAllChildrenEqualTo lCondition0 = new IfAllChildrenEqualTo { Value = "Done" };
-                    SetValue lUpdater0 = new SetValue { Value = "Closed" };
-                    lRule.Rules.Add(new FieldRule() { Condition = lCondition0, Updater = lUpdater0 });
-
-                    IfAtLeastOneChildEqualsTo lCondition1 = new IfAtLeastOneChildEqualsTo { Value = "Todo" };
-                    SetValue lUpdater1 = new SetValue { Value = "Open" };
-                    lRule.Rules.Add(new FieldRule() { Condition = lCondition1, Updater = lUpdater1 });
-
-                    IfAtLeastOneChildEqualsTo lCondition2 = new IfAtLeastOneChildEqualsTo { Value = "On going" };
-                    SetValue lUpdater2 = new SetValue { Value = "Open" };
-                    lRule.Rules.Add(new FieldRule() { Condition = lCondition2, Updater = lUpdater2 });
-
-                    IfAtLeastOneChildEqualsTo lCondition3 = new IfAtLeastOneChildEqualsTo { Value = "Review" };
-                    SetValue lUpdater3 = new SetValue { Value = "Open" };
-                    lRule.Rules.Add(new FieldRule() { Condition = lCondition3, Updater = lUpdater3 });
-
-                    NoCondition lCondition4 = new NoCondition();
-                    SetValue lUpdater4 = new SetValue { Value = "Not defined" };
-                    lRule.Rules.Add(new FieldRule() { Condition = lCondition4, Updater = lUpdater4 });
-                    this.Rules.Add(lRule);
-                }
-
-                {
-                    FieldRules lRule = new FieldRules();
-                    lRule.Description = "SOCLE GLOBAL DD update process according to tasks";
-
-                    lRule.TargetField = new Field { TrackerId = 489, FieldName = "Status" };
-                    Field lSourceField = new Field { TrackerId = 156, FieldName = "Status" };
-                    Field lSourceField1 = new Field { TrackerId = 108, FieldName = "Status" };
-                    lRule.SourceFields.Add(lSourceField);
-                    lRule.SourceFields.Add(lSourceField1);
+                    lRule.ParentField = "Status";
+                    lRule.ChildrenField = "Status";
 
                     IfAllChildrenEqualTo lCondition0 = new IfAllChildrenEqualTo { Value = "Done" };
                     SetValue lUpdater0 = new SetValue { Value = "Closed" };

@@ -1,11 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
-using JiraDance.FieldManagement;
-using JiraDance.FieldManagement.Conditions;
-using JiraDance.FieldManagement.Updaters;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace JiraDance
+namespace AtlassianCore
 {
     /// <summary>
     /// Stores the technical settings.
