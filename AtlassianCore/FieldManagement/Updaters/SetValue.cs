@@ -39,7 +39,7 @@ namespace AtlassianCore.FieldManagement.Updaters
         /// <returns>True if a modification has been done, false otherwise.</returns>
         public string Update(IJiraIssue issue, string targetField, string targetValue)
         {
-            object lOldValue = issue.GetPropValue(targetField);
+            object lOldValue = issue.GetPropertyValue(targetField);
             string lOldValueStr = "null";
             if (lOldValue != null)
             {
@@ -48,7 +48,7 @@ namespace AtlassianCore.FieldManagement.Updaters
             
             if (lOldValueStr != this.Value.ToString())
             {
-                //pArtifact.CommitValue(pConnection, pTargetField.FieldName, this.Value);
+                issue.SetPropertyValue(targetField, Value);
                 msLogger.Debug("-------->Change the value of " + issue.Key + " from " + lOldValueStr + " to " + this.Value);
             }
 

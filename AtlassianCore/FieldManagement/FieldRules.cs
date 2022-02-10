@@ -76,10 +76,11 @@ namespace AtlassianCore.FieldManagement
             msLogger.Debug("Rules applied.");
         }
 
-        private void ApplyRule(JiraIssue issue)
+        private void ApplyRule(JiraIssue parent)
         {
+            msLogger.Info("---->Check rule for " + parent.Key);
             // Apply rules on children.
-            foreach (var child in issue.Children)
+            foreach (var child in parent.Children)
             {
                 ApplyRule(child as JiraIssue);
             }
@@ -88,10 +89,10 @@ namespace AtlassianCore.FieldManagement
             bool hasBeenRaised = false;
             foreach (var rule in this.Rules)
             {
-                if (rule.Condition.IsRaised(issue.Children, this.ChildrenField) && hasBeenRaised == false)
+                if (rule.Condition.IsRaised(parent.Children, this.ChildrenField) && hasBeenRaised == false)
                 {
                     hasBeenRaised = true;
-                    rule.Updater.Update(issue, this.ParentField, "");
+                    rule.Updater.Update(parent, this.ParentField, "");
                 }
             }
         }

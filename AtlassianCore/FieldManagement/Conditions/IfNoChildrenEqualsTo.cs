@@ -31,7 +31,7 @@ namespace AtlassianCore.FieldManagement.Conditions
         {
             foreach (var child in children)
             {
-                if (child.GetPropValue(field).ToString() == this.Value.ToString())
+                if (child.GetPropertyValue(field).ToString() == this.Value.ToString())
                 {
                     return false;
                 }
