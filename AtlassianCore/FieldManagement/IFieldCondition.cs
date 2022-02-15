@@ -1,4 +1,5 @@
 ﻿using AtlassianCore.Models;
+using System.Collections.Generic;
 
 namespace AtlassianCore.FieldManagement
 {

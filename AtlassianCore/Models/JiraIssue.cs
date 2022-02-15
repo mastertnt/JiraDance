@@ -1,5 +1,7 @@
 ﻿using AtlassianCore.Utility;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AtlassianCore.Models
 {

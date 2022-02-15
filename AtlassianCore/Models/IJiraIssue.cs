@@ -1,4 +1,6 @@
-﻿namespace AtlassianCore.Models
+﻿using System.Collections.Generic;
+
+namespace AtlassianCore.Models
 {
     /// <summary>
     /// Interface for all the issues.

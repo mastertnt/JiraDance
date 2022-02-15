@@ -2,6 +2,7 @@
 using AtlassianCore.FieldManagement.Updaters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace AtlassianCore.FieldManagement
 {

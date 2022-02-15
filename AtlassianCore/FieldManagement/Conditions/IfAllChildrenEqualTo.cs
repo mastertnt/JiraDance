@@ -1,5 +1,6 @@
 ﻿using AtlassianCore.Models;
 using AtlassianCore.Utility;
+using System.Collections.Generic;
 
 namespace AtlassianCore.FieldManagement.Conditions
 {

@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RestEase;
+using System.IO;
+using System.Net.Http;
 
 namespace AtlassianCore.Utility
 {
