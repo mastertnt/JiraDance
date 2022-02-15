@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AtlassianCore.Models;
+using AtlassianCore.Models.Creation;
 using RestEase;
 
 namespace AtlassianCore
@@ -23,7 +24,7 @@ namespace AtlassianCore
         /// </summary>
         /// <param name="issueId">The issue id</param>
         /// <returns></returns>
-        [Get("agile/1.0/issue/{issueId}")]
+        [Get("/agile/1.0/issue/{issueId}")]
         Task<JiraIssue> GetIssue([Path] string issueId);
 
         /// <summary>
@@ -46,6 +47,12 @@ namespace AtlassianCore
 
         [Post("/api/2/issue/{issueId}/transitions")]
         Task ChangeStatus([Path] string issueId, [Body] string transition);
+
+        [Post("/api/2/issue/")]
+        Task<JiraIssue> CreateIssue([Body] IssueToCreate issue);
+
+        [Post("/api/2/issueLink")]
+        Task LinkIssues([Body] IssueLinkToCreate link);
     }
 
 }

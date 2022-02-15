@@ -60,14 +60,52 @@ namespace AtlassianCore.Utility
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
         /// <inheritdoc/>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            var properties = value.GetType().GetRuntimeProperties().Where(p => p.CanRead && p.CanWrite);
+            JObject main = new JObject();
+            foreach (PropertyInfo prop in properties)
+            {
+                JsonPropertyAttribute att = prop.GetCustomAttributes(true)
+                    .OfType<JsonPropertyAttribute>()
+                    .FirstOrDefault();
+
+                string jsonPath = att != null ? att.PropertyName : prop.Name;
+
+                if (serializer.ContractResolver is DefaultContractResolver)
+                {
+                    var resolver = (DefaultContractResolver)serializer.ContractResolver;
+                    jsonPath = resolver.GetResolvedPropertyName(jsonPath);
+                }
+
+                var nesting = jsonPath.Split('.');
+                JObject lastLevel = main;
+
+                for (int i = 0; i < nesting.Length; i++)
+                {
+                    if (i == nesting.Length - 1)
+                    {
+                        lastLevel[nesting[i]] = new JValue(prop.GetValue(value));
+                    }
+                    else
+                    {
+                        if (lastLevel[nesting[i]] == null)
+                        {
+                            lastLevel[nesting[i]] = new JObject();
+                        }
+
+                        lastLevel = (JObject)lastLevel[nesting[i]];
+                    }
+                }
+            }
+
+            serializer.Serialize(writer, main);
         }
     }
 }
+
