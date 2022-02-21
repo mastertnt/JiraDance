@@ -1,0 +1,57 @@
+﻿<mah:MetroWindow  x:Class="JiraQuery.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JiraQuery" xmlns:pt="http://propertytools.org/wpf"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid >
+
+        <Grid.Resources >
+            <Style TargetType="Border" >
+                <Setter Property="Padding" Value="5,5,5,5" />
+            </Style>
+        </Grid.Resources>
+
+        
+        
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <DockPanel Height="Auto" HorizontalAlignment="Stretch" Grid.Row="0" LastChildFill="True">
+                <Label>Filter</Label>
+                <ComboBox Name="CBFilters" ItemsSource="{Binding Filters}"
+                      DisplayMemberPath="Name"
+                      SelectedValuePath="Name"></ComboBox>
+            </DockPanel>
+
+            <StackPanel HorizontalAlignment="Center" Grid.Row="1">
+                <Button Click="Button_Click">Execute</Button>
+            </StackPanel>
+
+            <DockPanel Grid.Row="2" HorizontalAlignment="Stretch" LastChildFill="True">
+                <RichTextBox x:Name="RTBResult"
+                AcceptsReturn="True"
+                HorizontalScrollBarVisibility="Disabled"
+                VerticalScrollBarVisibility="Auto"/>
+            </DockPanel>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <pt:PropertyGrid x:Name="PGSelectedObject"></pt:PropertyGrid>
+        </Grid>
+
+    </Grid>
+</mah:MetroWindow>

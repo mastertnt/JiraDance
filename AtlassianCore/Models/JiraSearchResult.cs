@@ -13,4 +13,15 @@ namespace AtlassianCore.Models
             set;
         }
     }
+
+    [ToString]
+    public class JiraSearchResultSmall
+    {
+        [JsonProperty("issues")]
+        public List<JiraIssueSmall> Issues
+        {
+            get;
+            set;
+        }
+    }
 }

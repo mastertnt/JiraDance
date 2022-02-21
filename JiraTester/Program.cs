@@ -75,7 +75,7 @@ namespace JiraDance
             {
                 if (Directory.Exists(settings.ResponseDebugPath))
                 {
-                    api = RestClient.For<IJiraIssueApi>(settings.EndPoint, new DebugResponseDeserializer() { DebugPath = settings.ResponseDebugPath }, new DebugRequestBodySerializer { DebugPath = settings.ResponseDebugPath });
+                    api = new RestClient(settings.EndPoint) { ResponseDeserializer = new DebugResponseDeserializer() { DebugPath = settings.ResponseDebugPath }, RequestBodySerializer = new DebugRequestBodySerializer() { DebugPath = settings.ResponseDebugPath } }.For<IJiraIssueApi>();
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace JiraDance
             {
                 if (Directory.Exists(settings.ResponseDebugPath))
                 {
-                    api = RestClient.For<IJiraIssueApi>(settings.EndPoint, new DebugResponseDeserializer() { DebugPath = settings.ResponseDebugPath }, new DebugRequestBodySerializer { DebugPath = settings.ResponseDebugPath });
+                    api = new RestClient(settings.EndPoint) { ResponseDeserializer = new DebugResponseDeserializer() { DebugPath = settings.ResponseDebugPath }, RequestBodySerializer = new DebugRequestBodySerializer() { DebugPath = settings.ResponseDebugPath } }.For<IJiraIssueApi>();
                 }
                 else
                 {
@@ -154,9 +154,7 @@ namespace JiraDance
 
                 string key = CreateSubIssue("summary", "NBY-1", "description", "Bug", "Medium", "NBY");
                 Console.WriteLine(key);
-                
-                //GetIssue("NBY-1");
-
+ 
 
             }
             catch (Exception e)

@@ -1,5 +1,6 @@
 ﻿using AtlassianCore.Utility;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace AtlassianCore.Models
 {
@@ -7,6 +8,11 @@ namespace AtlassianCore.Models
     [JsonConverter(typeof(JsonPathConverter))]
     public class IssueToCreate
     {
+        public IssueToCreate()
+        {
+            this.CustomFields = new Dictionary<string, string>();
+        }
+        
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
@@ -65,6 +71,13 @@ namespace AtlassianCore.Models
 
         [JsonProperty("fields.parent.key")]
         public string ParentKey
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty("Dynamic")]
+        public Dictionary<string, string> CustomFields
         {
             get;
             set;

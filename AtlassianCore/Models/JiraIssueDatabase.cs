@@ -47,7 +47,7 @@ namespace AtlassianCore.Models
             {
                 if (Directory.Exists(responseDebugPath))
                 {
-                    api = RestClient.For<IJiraIssueApi>(endPoint, new DebugResponseDeserializer() { DebugPath = responseDebugPath });
+                    api = new RestClient(endPoint) { ResponseDeserializer = new DebugResponseDeserializer() { DebugPath = responseDebugPath }, RequestBodySerializer = new DebugRequestBodySerializer() { DebugPath = responseDebugPath } }.For<IJiraIssueApi>();
                 }
                 else
                 {
@@ -136,7 +136,7 @@ namespace AtlassianCore.Models
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <exception cref="NotImplementedException"></exception>
-        private void Issues_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Issues_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {

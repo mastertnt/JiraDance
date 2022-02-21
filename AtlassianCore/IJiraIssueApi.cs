@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AtlassianCore.Models;
 using AtlassianCore.Models.Creation;
@@ -37,6 +38,9 @@ namespace AtlassianCore
         [Get("/api/3/search?jql=project={projectName}&startAt={shift}")]
         Task<JiraSearchResult> GetAllIssuesByProject([Path] string projectName, [Path] int shift);
 
+        [Get("/api/3/search?jql={query}&startAt={shift}")]
+        Task<JiraSearchResultSmall> ExecuteJqj([Path] string query, [Path] int shift);
+
         /// <summary>
         /// Creates a comment on the issue.
         /// </summary>
@@ -53,6 +57,9 @@ namespace AtlassianCore
 
         [Post("/api/2/issueLink")]
         Task LinkIssues([Body] IssueLinkToCreate link);
+
+        [Get("api/3/field")]
+        Task<IEnumerable<JiraCustomField>> GetFields();
     }
 
 }

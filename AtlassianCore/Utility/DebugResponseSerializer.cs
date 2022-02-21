@@ -28,7 +28,7 @@ namespace AtlassianCore.Utility
         }
 
         /// <inheritdoc/>
-        public override T Deserialize<T>(string? content, HttpResponseMessage response, ResponseDeserializerInfo info)
+        public override T Deserialize<T>(string content, HttpResponseMessage response, ResponseDeserializerInfo info)
         {
             if (Directory.Exists(this.DebugPath))
             {

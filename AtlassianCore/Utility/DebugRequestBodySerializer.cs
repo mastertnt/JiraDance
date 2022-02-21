@@ -25,7 +25,7 @@ namespace AtlassianCore.Utility
             set;
         }
 
-        public override HttpContent? SerializeBody<T>(T body, RequestBodySerializerInfo info)
+        public override HttpContent SerializeBody<T>(T body, RequestBodySerializerInfo info)
         {
             if (Directory.Exists(this.DebugPath))
             {

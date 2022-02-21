@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Net.Http.Headers;
-using System.Text;
 using AtlassianCore;
 using AtlassianCore.Models;
-using Newtonsoft.Json.Converters;
-using RestEase;
 namespace JiraDance
 {
     internal class Program

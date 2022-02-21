@@ -2,14 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Nullable>disable</Nullable>
-    <ImplicitUsings>disable</ImplicitUsings>
+    <TargetFramework>net47</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="C:\Users\nbyco\.nuget\packages\nlog.config\4.7.13\contentFiles\any\any\NLog.config" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="5.8.6" />

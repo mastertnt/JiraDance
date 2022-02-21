@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<QueryDefinition name="Story in PI">
+	<Description>Find stories with epiclink</Description>
+	<Parameters>
+		<Parameter name="Project" defaultValue="NBY" />
+		<Parameter name="Sprint" defaultValue="1" />
+	</Parameters>
+	<Query description="Find all epics linked with a story">project = $Project$ and type = Epic</Query>
+	<Query description="Find all stories in a sprint">project = $Project$ and "Epic Link" in ($Where$) and type = Story ORDER BY created DESC</Query>
+</QueryDefinition>
+

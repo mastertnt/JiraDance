@@ -6,13 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AtlassianCore\AtlassianCore.csproj" />
+    <PackageReference Include="CsvHelper.Excel.Core" Version="27.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\AtlassianCore\AtlassianCore.csproj" />
   </ItemGroup>
 
 </Project>

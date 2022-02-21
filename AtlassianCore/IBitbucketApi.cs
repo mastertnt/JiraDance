@@ -17,6 +17,6 @@ namespace AtlassianCore
         AuthenticationHeaderValue Authorization { get; set; }
 
         [Get("/2.0/repositories/{workspace}/{repository}/pullrequests")]
-        public Task<List<PullRequest>> GetAllPullRequests([Path] string workspace, [Path] string repository);
+        Task<List<PullRequest>> GetAllPullRequests([Path] string workspace, [Path] string repository);
     }
 }
