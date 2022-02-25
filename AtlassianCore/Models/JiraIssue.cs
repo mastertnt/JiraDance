@@ -35,7 +35,11 @@ namespace AtlassianCore.Models
         {
             get
             {
-                return this.Database.Issues.Where(issue => issue.Parent != null && issue.Parent.Id == this.Id).ToList();
+                if (this.Database != null)
+                {
+                    return this.Database.Issues.Where(issue => issue.Parent != null && issue.Parent.Id == this.Id).ToList();
+                }
+                return null;                
             }
         }
 
@@ -57,20 +61,24 @@ namespace AtlassianCore.Models
         {
             get
             {
-                if (this.mSearchParent == false)
+                if (this.Database != null)
                 {
-                    this.mSearchParent = true;
-
-                    string parentKey = this.Issuelinks.FirstOrDefault(link => link.IsOutward && link.Type == "relates to")?.Key;
-                    if (string.IsNullOrWhiteSpace(parentKey))
+                    if (this.mSearchParent == false)
                     {
-                        parentKey = this.SubTaskParentKey;
+                        this.mSearchParent = true;
+
+                        string parentKey = this.Issuelinks.FirstOrDefault(link => link.IsOutward && link.Type == "relates to")?.Key;
+                        if (string.IsNullOrWhiteSpace(parentKey))
+                        {
+                            parentKey = this.SubTaskParentKey;
+                        }
+
+                        this.mParent = this.Database.Issues.FirstOrDefault(parent => parent.Key == parentKey);
                     }
 
-                    this.mParent = this.Database.Issues.FirstOrDefault(parent => parent.Key == parentKey);
+                    return this.mParent;
                 }
-
-                return this.mParent;
+                return null;
             }
         }
 
@@ -146,6 +154,13 @@ namespace AtlassianCore.Models
         /// </summary>
         [JsonProperty("fields.parent.key")]
         public string SubTaskParentKey
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty("Dynamic")]
+        public Dictionary<string, string> CustomFields
         {
             get;
             set;

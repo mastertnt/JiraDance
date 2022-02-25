@@ -29,6 +29,20 @@ namespace AtlassianCore.Utility
                     {
                         //Dictionary<string, string> value = prop.GetValue(existingValue);
                         //string jsonPath = att.PropertyName;
+
+                        Dictionary<string, string> dynamicProperties = prop.GetValue(targetObj) as Dictionary<string, string>;
+                        if (dynamicProperties != null)
+                        {
+                            foreach (var dynamicProperty in dynamicProperties)
+                            {
+                                JToken token = jo.SelectToken(dynamicProperty.Key);
+                                if (token != null && token.Type != JTokenType.Null)
+                                {
+                                    object value = token.ToObject(prop.PropertyType, serializer);
+                                    dynamicProperties[dynamicProperty.Key] = value.ToString();
+                                }
+                            }
+                        }                                                 
                     }
                     else
                     {

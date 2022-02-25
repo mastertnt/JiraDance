@@ -29,16 +29,24 @@ namespace AtlassianCore
         Task<JiraIssue> GetIssue([Path] string issueId);
 
         /// <summary>
+        /// Retrieves an issue with its id.
+        /// </summary>
+        /// <param name="issueId">The issue id</param>
+        /// <returns></returns>
+        [Get("/agile/1.0/issue/{issueId}")]
+        Task<JiraIssueSmall> GetSmallIssue([Path] string issueId);
+
+        /// <summary>
         /// Finds all issues for a given project.
         /// </summary>
         /// <param name="projectName">The project name.</param>
         /// <param name="shift">The shift to apply.</param>
         /// <returns></returns>
 
-        [Get("/api/3/search?jql=project={projectName}&startAt={shift}")]
+        [Get("/api/2/search?jql=project={projectName}&startAt={shift}")]
         Task<JiraSearchResult> GetAllIssuesByProject([Path] string projectName, [Path] int shift);
 
-        [Get("/api/3/search?jql={query}&startAt={shift}")]
+        [Get("/api/2/search?jql={query}&startAt={shift}")]
         Task<JiraSearchResultSmall> ExecuteJqj([Path] string query, [Path] int shift);
 
         /// <summary>

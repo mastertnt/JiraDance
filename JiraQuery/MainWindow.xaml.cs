@@ -68,6 +68,7 @@ namespace JiraQuery
                 foreach (XElement queryElement in root.Elements("Query"))
                 {
                     Query query = new Query();
+                    query.Name = queryElement.Attribute("name").Value;
                     query.Description = queryElement.Attribute("description").Value;
                     query.JQL = queryElement.Value;
                     filter.Queries.Add(query);
@@ -115,27 +116,31 @@ namespace JiraQuery
             var value = Convert.ToBase64String(Encoding.ASCII.GetBytes(this.TechSettings.Username + ":" + this.TechSettings.Password));
             api.Authorization = new AuthenticationHeaderValue("Basic", value);
 
+            RTBResult.Document.Blocks.Clear();
 
             // Look for the selected filter.
             Filter filter = this.Filters.FirstOrDefault(filterParam => filterParam.Name == this.CBFilters.SelectedValue.ToString());
+            Dictionary<string, string> wheres = new Dictionary<string, string>();
+            List<JiraIssueSmall> issues = new List<JiraIssueSmall>();
+            string last = "";
             if (filter != null)
             {
                 StringBuilder result = new StringBuilder();
-                string where = "";
                 bool error = false;
                 foreach (Query query in filter.Queries)
                 {
+                    issues.Clear();
                     if (error == false)
                     {
-                        List<JiraIssueSmall> issues = new List<JiraIssueSmall>();
+                        
                         string toExecute = query.JQL;
                         foreach (FilterParameter parameter in filter.Parameters)
                         {
                             toExecute = toExecute.Replace("$" + parameter.Name + "$", parameter.Value);
                         }
-                        if (string.IsNullOrEmpty(where) == false)
+                        foreach (var where in wheres)
                         {
-                            toExecute = toExecute.Replace("$Where$", where);
+                            toExecute = toExecute.Replace("$" + where.Key + "$", where.Value);
                         }
 
                         int before = 0;
@@ -160,15 +165,28 @@ namespace JiraQuery
                             after = issues.Count;
                         }
 
-                        where = string.Join(",", issues);
+                        if (wheres.ContainsKey(query.Name) == false)
+                        {
+                            wheres.Add(query.Name, string.Join(",", issues));
+                        }
+                        else
+                        {
+                            wheres[query.Name] = string.Join(",", issues);
+                        }
 
-                        result.AppendLine("Result : " + where);
+                        result.AppendLine(query.Name + " Result Key in (" + wheres[query.Name] + ")");
+                        last = query.Name;
                     }
                     
                 }
-
+                Clipboard.SetText("Key in (" + wheres[last] + ")");
                 RTBResult.AppendText(result.ToString());
             }
+        }
+
+        private void CBFilters_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            this.PGSelectedObject.SelectedObject = this.Filters[this.CBFilters.SelectedIndex];
         }
     }
 }

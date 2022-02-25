@@ -34,7 +34,7 @@
                 <Label>Filter</Label>
                 <ComboBox Name="CBFilters" ItemsSource="{Binding Filters}"
                       DisplayMemberPath="Name"
-                      SelectedValuePath="Name"></ComboBox>
+                      SelectedValuePath="Name" SelectionChanged="CBFilters_SelectionChanged"></ComboBox>
             </DockPanel>
 
             <StackPanel HorizontalAlignment="Center" Grid.Row="1">

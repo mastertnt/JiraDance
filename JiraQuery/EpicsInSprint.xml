@@ -5,7 +5,7 @@
 		<Parameter name="Project" defaultValue="NBY" />
 		<Parameter name="Sprint" defaultValue="1" />
 	</Parameters>
-	<Query description="Find all epics linked with a story">project = $Project$ and type = Epic</Query>
-	<Query description="Find all stories in a sprint">project = $Project$ and "Epic Link" in ($Where$) and type = Story ORDER BY created DESC</Query>
+	<Query name="Epics" description="Find all epics linked with a story">project = $Project$ and type = Epic</Query>
+	<Query name="Stories" description="Find all stories in a sprint">project = $Project$ and "Epic Link" in ($Where$) and type = Story ORDER BY created DESC</Query>
 </QueryDefinition>
 

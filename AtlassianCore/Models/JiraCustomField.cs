@@ -20,12 +20,5 @@ namespace AtlassianCore.Models
             get;
             set;
         }
-
-        [JsonProperty("custom")]
-        bool IsCustom
-        {
-            get;
-            set;
-        }
     }
 }

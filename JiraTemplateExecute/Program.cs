@@ -268,11 +268,7 @@ namespace JiraDance
                 //    }
                 //}
 
-                msCustomFields = GetApi().GetFields().Result.ToList();
-                foreach (var customField in msCustomFields)
-                {
-                    Console.WriteLine(customField.ToString());
-                }
+               
 
                 try
                 {
